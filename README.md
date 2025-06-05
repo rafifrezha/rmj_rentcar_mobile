@@ -1,7 +1,7 @@
 # 🚗 Rumah Mobil Jogja - RMJ RentCar Mobile App
 
 Selamat datang di **Rumah Mobil Jogja**!  
-Aplikasi mobile untuk rental mobil kekinian berbasis Flutter 🚀
+Aplikasi mobile untuk rental mobil berbasis Flutter 🚀
 
 ---
 
