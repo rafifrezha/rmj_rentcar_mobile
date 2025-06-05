@@ -23,7 +23,6 @@ Aplikasi mobile untuk rental mobil kekinian berbasis Flutter 🚀
 
 - Desain modern, gelap, dan responsif.
 - Navigasi mudah dengan Bottom Navigation Bar.
-- UI konsisten dengan warna utama: `#00E09E` dan nuansa dark.
 
 ---
 
