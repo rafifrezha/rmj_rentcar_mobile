@@ -49,12 +49,3 @@ Aplikasi mobile untuk rental mobil kekinian berbasis Flutter 🚀
 4. Login dengan akun yang sudah terdaftar atau register baru.
 
 ---
-
-## 💡 Saran & Kesan
-
-> "Aplikasi ini dibuat sebagai tugas akhir matakuliah. Materi dan tugasnya menantang, dosen dan aslab sangat membantu. Semoga aplikasi ini bermanfaat dan bisa dikembangkan lebih lanjut! 🚀"
-
----
-
-Terima kasih sudah mampir!  
-⭐ Jangan lupa di-star repo ini kalau bermanfaat!
