@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RMJ RentCar - Landing</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-light" style="padding-top: 100px">
+    <nav
+      id="mainNavbar"
+      class="navbar navbar-expand-lg navbar-dark custom-navbar shadow fixed-top"
+      style="background: #1a2236; height: 80px; z-index: 100"
+    >
+      <div
+        class="container-fluid px-4 justify-content-center position-relative"
+      >
+        <ul
+          class="navbar-nav flex-row align-items-center position-absolute start-0 ms-4"
+          style="top: 50%; transform: translateY(-50%)"
+        >
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              href="index.html"
+              style="font-size: 1.1rem; color: #fff; font-weight: 600"
+              >Menu</a
+            >
+          </li>
+          <li class="nav-item ms-3">
+            <a
+              class="nav-link"
+              href="#cars_by_brand"
+              style="font-size: 1.1rem; color: #bfc9d1"
+              >Book</a
+            >
+          </li>
+        </ul>
+        <a
+          class="navbar-brand mx-auto d-flex align-items-center justify-content-center"
+          href="#"
+          style="font-size: 2.1rem; color: #fff; letter-spacing: 1px"
+        >
+          <img
+            src="assets/logo-rmj.png"
+            alt="Logo"
+            style="height: 64px; margin-right: 0"
+          />
+        </a>
+        <div
+          class="d-flex align-items-center position-absolute end-0"
+          style="top: 50%; transform: translateY(-50%); gap: 18px"
+        >
+          <!-- Search Input and Icon (gradient dark theme, aligned, perfect center) -->
+          <form
+            class="d-flex align-items-center"
+            style="width: 260px; max-width: 50vw; margin-bottom: 0"
+            autocomplete="off"
+          >
+            <div
+              style="
+                display: flex;
+                width: 100%;
+                background: linear-gradient(90deg, #232b3e 0%, #1a2236 100%);
+                border-radius: 20px;
+                overflow: hidden;
+                align-items: center;
+                height: 40px;
+              "
+            >
+              <input
+                type="text"
+                id="searchAll"
+                class="form-control border-0 shadow-none"
+                placeholder="Cari Mobil"
+                autocomplete="off"
+                style="
+                  border-radius: 20px 0 0 20px;
+                  background: transparent;
+                  color: #e0e6ed;
+                  border: none;
+                  font-size: 1.08rem;
+                  height: 40px;
+                  box-shadow: none;
+                  padding-left: 18px;
+                  padding-right: 0;
+                  flex: 1 1 auto;
+                  min-width: 0;
+                  display: block;
+                  line-height: 40px;
+                  font-weight: 500;
+                  vertical-align: middle;
+                "
+              />
+              <span
+                class="d-flex align-items-center justify-content-center"
+                style="
+                  background: #1cc6ea;
+                  width: 48px;
+                  height: 40px;
+                  border-radius: 0 20px 20px 0;
+                  border: none;
+                  cursor: pointer;
+                  flex-shrink: 0;
+                "
+                tabindex="-1"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  style="display: block"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+              </span>
+            </div>
+          </form>
+          <!-- User badge (dummy, not login) -->
+          <div
+            class="user-badge d-flex align-items-center px-3 py-2"
+            style="
+              background: #697290;
+              border-radius: 16px;
+              color: #fff;
+              font-weight: 600;
+              font-size: 1rem;
+              margin-right: 12px;
+              gap: 8px;
+            "
+          >
+            <svg
+              width="22"
+              height="22"
+              fill="none"
+              stroke="#fff"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              style="margin-right: 4px"
+            >
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20c0-4 8-4 8-4s8 0 8 4" />
+            </svg>
+            <span id="navbarUsername">Guest</span>
+          </div>
+          <a
+            class="btn btn-warning"
+            href="login.html"
+            style="
+              font-weight: 600;
+              border-radius: 22px;
+              padding: 8px 28px;
+              font-size: 1.1rem;
+              box-shadow: none;
+              color: #1a2236 !important;
+            "
+            >Login</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="hero-section">
+      <img
+        src="assets/Banner.png"
+        alt="Hero Banner"
+        class="img-fluid w-100"
+        style="
+          border-radius: 18px;
+          max-width: 85%;
+          height: auto;
+          display: block;
+        "
+      />
+    </section>
+
+    <div class="container py-5">
+      <h2 class="mb-4 fw-bold" style="color: #fff">Daftar Mobil Tersedia</h2>
+      <hr
+        style="
+          border: 0;
+          border-top: 2px solid #ffffff;
+          opacity: 0.4;
+          margin-bottom: 40px;
+          width: 350px;
+        "
+      />
+      <div id="cars_by_brand"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // --- Mobil Grid & Filter ---
+      let carsData = [];
+      const carsByBrandDiv = document.getElementById("cars_by_brand");
+      async function getCars() {
+        try {
+          const res = await fetch(
+            "https://rmjrentcar-86067911510.asia-southeast2.run.app/cars"
+          );
+          if (!res.ok) throw new Error("Gagal mengambil data mobil");
+          return await res.json();
+        } catch (err) {
+          carsByBrandDiv.innerHTML = `<div class="col-12"><div class="alert alert-danger text-center">Tidak dapat mengambil data mobil dari server.</div></div>`;
+          return [];
+        }
+      }
+      function renderCarsByBrand(list) {
+        carsByBrandDiv.innerHTML = "";
+        const keyword = document
+          .getElementById("searchAll")
+          .value.toLowerCase();
+        // Filter available cars
+        let filtered = list.filter(
+          (car) => car.availability === true || car.availability === 1
+        );
+        if (keyword) {
+          filtered = filtered.filter(
+            (car) =>
+              car.brand.toLowerCase().includes(keyword) ||
+              car.model.toLowerCase().includes(keyword) ||
+              String(car.year).includes(keyword)
+          );
+        }
+        if (!filtered.length) {
+          carsByBrandDiv.innerHTML = `<div class="col-12"><div class="alert alert-warning text-center">Tidak ada data mobil tersedia.</div></div>`;
+          return;
+        }
+        // Group by brand
+        const brands = Array.from(new Set(filtered.map((car) => car.brand)));
+        for (const brand of brands) {
+          const cars = filtered.filter((car) => car.brand === brand);
+          let rowHtml = `
+        <div class="mb-4">
+          <h4 class="mb-3" style="color:#fff;font-weight:600;">${brand}</h4>
+          <div class="row g-4">
+      `;
+          for (const car of cars) {
+            rowHtml += `
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow h-100">
+              <div style="width:100%;aspect-ratio:16/9;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#232b3e;">
+                <img src="${
+                  car.url_photo ||
+                  "https://via.placeholder.com/400x200?text=No+Image"
+                }" class="card-img-top" alt="car photo" style="width:100%;height:100%;object-fit:contain;object-position:center;">
+              </div>
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">${car.brand} ${car.model}</h5>
+                <ul class="list-group list-group-flush mb-3">
+                  <li class="list-group-item">Tahun: <b>${car.year}</b></li>
+                  <li class="list-group-item">Plat: <b>${
+                    car.license_plate
+                  }</b></li>
+                  <li class="list-group-item">Harga/Hari: <span class="badge bg-primary">Rp${
+                    car.price_per_day
+                  }</span></li>
+                </ul>
+                <a
+                  href="login.html"
+                  class="btn btn-gradient mt-auto w-100"
+                  style="
+                    background: linear-gradient(90deg, #3a4e79 0%, #5a6f9b 100%);
+                    color: #fff;
+                    border: none;
+                    font-weight: 600;
+                    border-radius: 12px;
+                    padding: 10px 0;
+                    box-shadow: 0 2px 8px rgba(90,111,155,0.2);
+                    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+                  "
+                  onmouseover="this.style.background='linear-gradient(90deg, #5a6f9b 0%, #3a4e79 100%)';"
+                  onmouseout="this.style.background='linear-gradient(90deg, #3a4e79 0%, #5a6f9b 100%)';"
+                >Sewa Mobil</a>
+              </div>
+            </div>
+          </div>
+        `;
+          }
+          rowHtml += `</div></div>`;
+          carsByBrandDiv.insertAdjacentHTML("beforeend", rowHtml);
+        }
+      }
+      async function loadCars() {
+        carsData = await getCars();
+        renderCarsByBrand(carsData);
+      }
+      loadCars();
+
+      document.getElementById("searchAll").oninput = function () {
+        renderCarsByBrand(carsData);
+      };
+    </script>
+    <style>
+      /* ...existing code... */
+      #searchAll:focus {
+        outline: none;
+        border: none;
+        background: transparent;
+        color: #fff;
+        box-shadow: none;
+      }
+      #searchAll::placeholder {
+        color: #e0e6ed;
+        opacity: 1;
+        font-weight: 500;
+        font-size: 1.08rem;
+        line-height: 40px;
+        vertical-align: middle;
+      }
+      #searchAll {
+        box-shadow: none !important;
+        border: none !important;
+        color: #e0e6ed;
+        background: transparent !important;
+        height: 40px;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        line-height: 40px;
+        font-weight: 500;
+        font-size: 1.08rem;
+        vertical-align: middle;
+      }
+      .custom-dropdown {
+        background: #232b3e !important;
+        border-radius: 10px;
+        min-width: 160px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+        border: none;
+      }
+      .custom-dropdown .dropdown-item {
+        color: #e0e6ed !important;
+        font-weight: 500;
+        background: transparent;
+        transition: background 0.2s, color 0.2s;
+      }
+      .custom-dropdown .dropdown-item:hover,
+      .custom-dropdown .dropdown-item:focus {
+        background: #00e09e !important;
+        color: #1a2236 !important;
+      }
+      .navbar-brand:hover,
+      .navbar-brand:focus {
+        color: #fff !important;
+        background: none !important;
+        text-decoration: none !important;
+        cursor: default !important;
+      }
+    </style>
+  </body>
+</html>

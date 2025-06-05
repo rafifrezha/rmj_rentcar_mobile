@@ -89,7 +89,19 @@ class ApiService {
       },
       body: jsonEncode(rental.toJson()),
     );
-    return response.statusCode == 201;
+    print('Create rental response: ${response.statusCode} ${response.body}');
+    // Tambahkan pengecekan error
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      // Coba tampilkan pesan error jika ada
+      try {
+        final data = jsonDecode(response.body);
+        throw Exception(data['message'] ?? 'Gagal membuat rental');
+      } catch (_) {
+        throw Exception('Gagal membuat rental');
+      }
+    }
   }
 
   // Get Rentals
@@ -108,5 +120,55 @@ class ApiService {
       return data.map((json) => Rental.fromJson(json)).toList();
     }
     return [];
+  }
+
+  static Future<List<Rental>> getRentalsForCar(int carId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString(tokenKey);
+    final response = await http.get(
+      Uri.parse('$baseUrl/rentals'),
+      headers: {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data
+          .map((json) => Rental.fromJson(json))
+          .where((r) => r.carId == carId)
+          .toList();
+    }
+    return [];
+  }
+
+  static Future<bool> updateRentalStatus(int rentalId, String status) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString(tokenKey);
+    final response = await http.put(
+      Uri.parse('$baseUrl/rentals/update/$rentalId'),
+      headers: {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({'status': status}),
+    );
+    return response.statusCode == 200;
+  }
+
+  // Batalkan sewa (delete rental dari database)
+  static Future<bool> deleteRental(int rentalId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString(tokenKey);
+    final response = await http.delete(
+      Uri.parse(
+        '$baseUrl/rentals/delete/$rentalId',
+      ), // sesuaikan dengan route backend
+      headers: {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      },
+    );
+    return response.statusCode == 200;
   }
 }

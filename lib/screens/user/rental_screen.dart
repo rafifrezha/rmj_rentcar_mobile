@@ -15,19 +15,32 @@ class _RentalScreenState extends State<RentalScreen> {
   DateTime? _startDate;
   DateTime? _endDate;
   bool _isLoading = false;
+  bool _isDateRangeAvailable = true;
+  List<DateTimeRange> _bookedRanges = [];
+
+  String _currency = 'IDR';
 
   String formatCurrency(int amount) {
-    final String amountStr = amount.toString();
-    String result = '';
-    int counter = 0;
-    for (int i = amountStr.length - 1; i >= 0; i--) {
-      if (counter > 0 && counter % 3 == 0) {
-        result = '.' + result;
-      }
-      result = amountStr[i] + result;
-      counter++;
+    switch (_currency) {
+      case 'USD':
+        return '\$${(amount / 15500).toStringAsFixed(2)}';
+      case 'SGD':
+        return 'S\$${(amount / 11500).toStringAsFixed(2)}';
+      case 'EUR':
+        return '€${(amount / 17000).toStringAsFixed(2)}';
+      default:
+        final String amountStr = amount.toString();
+        String result = '';
+        int counter = 0;
+        for (int i = amountStr.length - 1; i >= 0; i--) {
+          if (counter > 0 && counter % 3 == 0) {
+            result = '.' + result;
+          }
+          result = amountStr[i] + result;
+          counter++;
+        }
+        return 'Rp $result';
     }
-    return 'Rp $result';
   }
 
   String formatDate(DateTime? date) {
@@ -48,52 +61,169 @@ class _RentalScreenState extends State<RentalScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Rental Mobil')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(18.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Pilihan currency
+            Row(
+              children: [
+                const Text(
+                  'Currency: ',
+                  style: TextStyle(
+                    color: Color(0xFF00E09E),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                DropdownButton<String>(
+                  value: _currency,
+                  dropdownColor: const Color(0xFF232B3E),
+                  style: const TextStyle(
+                    color: Color(0xFF00E09E),
+                    fontWeight: FontWeight.bold,
+                  ),
+                  items: const [
+                    DropdownMenuItem(value: 'IDR', child: Text('IDR (Rp)')),
+                    DropdownMenuItem(value: 'USD', child: Text('USD (\$)')),
+                    DropdownMenuItem(value: 'SGD', child: Text('SGD (S\$)')),
+                    DropdownMenuItem(value: 'EUR', child: Text('EUR (€)')),
+                  ],
+                  onChanged: (val) {
+                    setState(() {
+                      _currency = val ?? 'IDR';
+                    });
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            // Card Mobil
             Card(
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18),
+              ),
+              color: const Color(0xFF232B3E),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.all(18.0),
+                child: Row(
                   children: [
-                    Image.network(
-                      car.imageUrl,
-                      height: 200,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      car.name,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        car.imageUrl,
+                        height: 160, // diperbesar dari 110
+                        width: 160, // diperbesar dari 110
+                        fit: BoxFit.contain,
+                        errorBuilder: (c, e, s) => Container(
+                          width: 160,
+                          height: 160,
+                          color: Colors.grey[300],
+                          child: const Icon(Icons.car_rental, size: 64),
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      '${formatCurrency(car.pricePerDay)} / hari',
-                      style: const TextStyle(fontSize: 18, color: Colors.green),
+                    const SizedBox(width: 18),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            car.name,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF00E09E),
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.calendar_today,
+                                size: 16,
+                                color: Colors.white70,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                'Tahun: ${car.year}',
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.confirmation_number,
+                                size: 16,
+                                color: Colors.white70,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                'Plat: ${car.licensePlate}',
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF00E09E),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              '${formatCurrency(car.pricePerDay)} / hari',
+                              style: const TextStyle(
+                                color: Color(0xFF232B3E),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 28),
             const Text(
               'Pilih Tanggal Rental',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF00E09E),
+              ),
             ),
             const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
+                  child: OutlinedButton.icon(
+                    icon: const Icon(Icons.date_range),
                     onPressed: () => _selectStartDate(context),
-                    child: Text(
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      side: const BorderSide(color: Color(0xFF00E09E)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    label: Text(
                       _startDate != null
                           ? 'Mulai: ${formatDate(_startDate!)}'
                           : 'Pilih Tanggal Mulai',
@@ -102,9 +232,17 @@ class _RentalScreenState extends State<RentalScreen> {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: OutlinedButton(
+                  child: OutlinedButton.icon(
+                    icon: const Icon(Icons.date_range),
                     onPressed: () => _selectEndDate(context),
-                    child: Text(
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      side: const BorderSide(color: Color(0xFF00E09E)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    label: Text(
                       _endDate != null
                           ? 'Selesai: ${formatDate(_endDate!)}'
                           : 'Pilih Tanggal Selesai',
@@ -114,46 +252,156 @@ class _RentalScreenState extends State<RentalScreen> {
               ],
             ),
             if (_startDate != null && _endDate != null) ...[
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
               Card(
+                elevation: 6,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                color: const Color(0xFF232B3E),
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(18.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Durasi: $totalDays hari'),
-                      Text(
-                        'Harga per hari: ${formatCurrency(car.pricePerDay)}',
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.timer,
+                            color: Colors.white70,
+                            size: 18,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Durasi: $totalDays hari',
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
                       ),
-                      const Divider(),
-                      Text(
-                        'Total: ${formatCurrency(totalPrice)}',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.attach_money,
+                            color: Colors.green,
+                            size: 18,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Harga per hari: ${formatCurrency(car.pricePerDay)}',
+                            style: const TextStyle(
+                              color: Colors.green,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Divider(height: 24, color: Colors.white24),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.payments,
+                            color: Color(0xFF00E09E),
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Total: ${formatCurrency(totalPrice)}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF00E09E),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
               ),
             ],
-            const Spacer(),
+            if (!_isDateRangeAvailable)
+              const Padding(
+                padding: EdgeInsets.only(bottom: 12),
+                child: Text(
+                  'Tanggal yang dipilih sudah dibooking, silakan pilih tanggal lain.',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            const SizedBox(height: 28),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _startDate != null && _endDate != null && !_isLoading
+              child: ElevatedButton.icon(
+                icon: _isLoading
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Icon(
+                        Icons.check_circle_outline,
+                        color: Color(0xFF00E09E),
+                      ),
+                label: const Text(
+                  'Sewa Mobil',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF00E09E),
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF232B3E),
+                  foregroundColor: const Color(0xFF00E09E),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  elevation: 6,
+                ),
+                onPressed:
+                    _startDate != null &&
+                        _endDate != null &&
+                        !_isLoading &&
+                        _isDateRangeAvailable
                     ? () => _submitRental(car, totalPrice)
                     : null,
-                child: _isLoading
-                    ? const CircularProgressIndicator()
-                    : const Text('Sewa Mobil'),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final car = ModalRoute.of(context)!.settings.arguments as Car;
+    _fetchBookedRanges(car.carId);
+  }
+
+  Future<void> _fetchBookedRanges(int carId) async {
+    // Ambil rental yang sudah ada untuk mobil ini
+    final allRentals = await ApiService.getRentalsForCar(carId);
+    setState(() {
+      _bookedRanges = allRentals
+          .where((r) => r.status == 'reserved' || r.status == 'ongoing')
+          .map(
+            (r) =>
+                DateTimeRange(start: r.rentalStartDate, end: r.rentalEndDate),
+          )
+          .toList();
+    });
   }
 
   Future<void> _selectStartDate(BuildContext context) async {
@@ -169,6 +417,7 @@ class _RentalScreenState extends State<RentalScreen> {
         if (_endDate != null && _endDate!.isBefore(date)) {
           _endDate = null;
         }
+        _checkDateRange();
       });
     }
   }
@@ -190,8 +439,28 @@ class _RentalScreenState extends State<RentalScreen> {
       lastDate: DateTime.now().add(const Duration(days: 365)),
     );
     if (date != null) {
-      setState(() => _endDate = date);
+      setState(() {
+        _endDate = date;
+        _checkDateRange();
+      });
     }
+  }
+
+  void _checkDateRange() {
+    if (_startDate == null || _endDate == null) {
+      _isDateRangeAvailable = true;
+      return;
+    }
+    final selectedRange = DateTimeRange(start: _startDate!, end: _endDate!);
+    _isDateRangeAvailable = !_bookedRanges.any(
+      (booked) =>
+          selectedRange.start.isBefore(
+            booked.end.add(const Duration(days: 1)),
+          ) &&
+          selectedRange.end.isAfter(
+            booked.start.subtract(const Duration(days: 1)),
+          ),
+    );
   }
 
   Future<void> _submitRental(Car car, int totalPrice) async {
@@ -216,22 +485,85 @@ class _RentalScreenState extends State<RentalScreen> {
       rentalStartDate: _startDate!,
       rentalEndDate: _endDate!,
       totalPrice: totalPrice,
-      status: 'pending',
+      status: 'reserved',
     );
 
     try {
-      bool success = await ApiService.createRental(rental);
-      if (!success) {
-        await LocalDbService.insertRental(rental.toJson());
-        success = true;
-      }
+      final success = await ApiService.createRental(rental);
       setState(() => _isLoading = false);
 
       if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Rental berhasil dibuat!')),
+        // Tampilkan popup sukses
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (ctx) => Dialog(
+            backgroundColor: const Color(0xFF232B3E),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: const Color(0xFF00E09E).withOpacity(0.15),
+                    ),
+                    padding: const EdgeInsets.all(18),
+                    child: const Icon(
+                      Icons.check_circle,
+                      color: Color(0xFF00E09E),
+                      size: 54,
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  const Text(
+                    'Berhasil!',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF00E09E),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Pemesanan sewa mobil Anda berhasil.\nSilakan cek riwayat untuk detail.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Color(0xFFE0E6ED), fontSize: 15),
+                  ),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF00E09E),
+                        foregroundColor: const Color(0xFF232B3E),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(ctx); // tutup dialog
+                        Navigator.pop(context); // kembali ke screen sebelumnya
+                      },
+                      child: const Text(
+                        'Kembali',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         );
-        Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
