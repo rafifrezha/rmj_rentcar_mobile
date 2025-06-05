@@ -7,7 +7,7 @@ Aplikasi mobile untuk rental mobil berbasis Flutter 🚀
 
 ## ✨ Fitur Utama
 
-- 🔑 **Autentikasi**: Login & Register user/admin.
+- 🔑 **Autentikasi**: Login & Register.
 - 🏠 **Main Screen**: Cari & lihat mobil berdasarkan brand.
 - 💸 **Konversi Mata Uang**: Lihat harga mobil dalam IDR, USD, SGD, EUR.
 - 📅 **Rental Mobil**: Pilih tanggal, cek ketersediaan, dan pesan mobil.
