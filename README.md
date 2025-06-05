@@ -64,19 +64,5 @@ Aplikasi mobile untuk rental mobil kekinian berbasis Flutter 🚀
 
 ---
 
-## 📷 Screenshot
-
-![Main Screen](assets/screenshot_main.png)
-![Rental](assets/screenshot_rental.png)
-![History](assets/screenshot_history.png)
-
----
-
-## 📄 Lisensi
-
-MIT License
-
----
-
 Terima kasih sudah mampir!  
 ⭐ Jangan lupa di-star repo ini kalau bermanfaat!
