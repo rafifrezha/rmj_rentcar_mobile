@@ -15,7 +15,6 @@ Aplikasi mobile untuk rental mobil berbasis Flutter 🚀
 - 👤 **Profil**: Lihat data user, statistik order, total pengeluaran.
 - ⏰ **Konversi Waktu**: Lihat waktu WIB, WITA, WIT, dan London.
 - 💬 **Saran & Kesan**: Feedback matakuliah Teknologi & Pemrograman Mobile.
-- 🛡️ **Admin Panel**: Kelola data mobil & rental (khusus admin).
 
 ---
 
