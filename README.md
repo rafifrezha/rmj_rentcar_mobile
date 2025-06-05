@@ -50,14 +50,6 @@ Aplikasi mobile untuk rental mobil kekinian berbasis Flutter 🚀
 
 ---
 
-## 👨‍💻 Kontributor
-
-- Mahasiswa Universitas (Tugas Matakuliah Teknologi & Pemrograman Mobile)
-- Dosen: Bagus Muhammad Akbar
-- Aslab: Tim Asisten Laboratorium
-
----
-
 ## 💡 Saran & Kesan
 
 > "Aplikasi ini dibuat sebagai tugas akhir matakuliah. Materi dan tugasnya menantang, dosen dan aslab sangat membantu. Semoga aplikasi ini bermanfaat dan bisa dikembangkan lebih lanjut! 🚀"
