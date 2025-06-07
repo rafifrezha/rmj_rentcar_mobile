@@ -1,82 +1,16 @@
-# 🚗 Rumah Mobil Jogja - RMJ RentCar Mobile App
+# rmj_rentcar_mobile
 
-Selamat datang di **Rumah Mobil Jogja**!  
-Aplikasi mobile untuk rental mobil kekinian berbasis Flutter 🚀
+A new Flutter project.
 
----
+## Getting Started
 
-## ✨ Fitur Utama
+This project is a starting point for a Flutter application.
 
-- 🔑 **Autentikasi**: Login & Register user/admin.
-- 🏠 **Main Screen**: Cari & lihat mobil berdasarkan brand.
-- 💸 **Konversi Mata Uang**: Lihat harga mobil dalam IDR, USD, SGD, EUR.
-- 📅 **Rental Mobil**: Pilih tanggal, cek ketersediaan, dan pesan mobil.
-- 📜 **Riwayat Sewa**: Lihat dan batalkan pesanan jika masih reserved.
-- 👤 **Profil**: Lihat data user, statistik order, total pengeluaran.
-- ⏰ **Konversi Waktu**: Lihat waktu WIB, WITA, WIT, dan London.
-- 💬 **Saran & Kesan**: Feedback matakuliah Teknologi & Pemrograman Mobile.
-- 🛡️ **Admin Panel**: Kelola data mobil & rental (khusus admin).
+A few resources to get you started if this is your first Flutter project:
 
----
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-## 📱 Tampilan
-
-- Desain modern, gelap, dan responsif.
-- Navigasi mudah dengan Bottom Navigation Bar.
-- UI konsisten dengan warna utama: `#00E09E` dan nuansa dark.
-
----
-
-## 🛠️ Teknologi
-
-- **Flutter** (Dart)
-- **REST API** (Node.js/Express backend)
-- **MySQL** (Database)
-- **Shared Preferences** (Session user)
-- **HTTP** (Networking)
-
----
-
-## 🚀 Cara Menjalankan
-
-1. **Clone repo ini**
-2. Jalankan backend (lihat folder `backend/`)
-3. Jalankan Flutter:
-   ```bash
-   flutter pub get
-   flutter run
-   ```
-4. Login dengan akun yang sudah terdaftar atau register baru.
-
----
-
-## 👨‍💻 Kontributor
-
-- Mahasiswa Universitas (Tugas Matakuliah Teknologi & Pemrograman Mobile)
-- Dosen: Bagus Muhammad Akbar
-- Aslab: Tim Asisten Laboratorium
-
----
-
-## 💡 Saran & Kesan
-
-> "Aplikasi ini dibuat sebagai tugas akhir matakuliah. Materi dan tugasnya menantang, dosen dan aslab sangat membantu. Semoga aplikasi ini bermanfaat dan bisa dikembangkan lebih lanjut! 🚀"
-
----
-
-## 📷 Screenshot
-
-![Main Screen](assets/screenshot_main.png)
-![Rental](assets/screenshot_rental.png)
-![History](assets/screenshot_history.png)
-
----
-
-## 📄 Lisensi
-
-MIT License
-
----
-
-Terima kasih sudah mampir!  
-⭐ Jangan lupa di-star repo ini kalau bermanfaat!
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
