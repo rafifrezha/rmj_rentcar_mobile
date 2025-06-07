@@ -223,6 +223,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const Divider(height: 1, color: Colors.white12),
                         ListTile(
                           leading: const Icon(
+                            Icons.location_on,
+                            color: Color(0xFF00E09E),
+                          ),
+                          title: const Text(
+                            'Lokasi Kami',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onTap: () =>
+                              Navigator.pushNamed(context, '/location'),
+                        ),
+                        const Divider(height: 1, color: Colors.white12),
+                        ListTile(
+                          leading: const Icon(
                             Icons.access_time,
                             color: Color(0xFF00E09E),
                           ),

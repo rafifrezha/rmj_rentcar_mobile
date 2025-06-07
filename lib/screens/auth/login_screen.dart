@@ -38,12 +38,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
         // Samakan dengan register: cek jika result == true atau result['success'] == true
         if ((result is bool && result == true) ||
-            (result is Map &&
-                result['success'] == true &&
-                result['user'] != null)) {
+            (result['success'] == true && result['user'] != null)) {
           // Jika result['user'] ada, gunakan, jika tidak, ambil dari SharedPrefsService
           User? user;
-          if (result is Map && result['user'] != null) {
+          if (result['user'] != null) {
             user = result['user'];
           } else {
             user = await SharedPrefsService.getUser();

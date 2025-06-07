@@ -33,7 +33,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         int counter = 0;
         for (int i = amountStr.length - 1; i >= 0; i--) {
           if (counter > 0 && counter % 3 == 0) {
-            result = '.' + result;
+            result = '.$result';
           }
           result = amountStr[i] + result;
           counter++;
@@ -428,10 +428,33 @@ class _HistoryScreenState extends State<HistoryScreen> {
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: const Text('Berhasil'),
-            content: const Text('Sewa berhasil dibatalkan dan dihapus.'),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+            backgroundColor: const Color(0xFF232B3E),
+            title: Row(
+              children: const [
+                Icon(Icons.check_circle, color: Color(0xFF00E09E), size: 32),
+                SizedBox(width: 10),
+                Text(
+                  'Berhasil',
+                  style: TextStyle(
+                    color: Color(0xFF00E09E),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            content: const Text(
+              'Sewa berhasil dibatalkan dan dihapus.',
+              style: TextStyle(color: Colors.white, fontSize: 15),
+            ),
             actions: [
               TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: const Color(0xFF00E09E),
+                  textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
                   Navigator.pop(ctx);
                   _loadRentals();

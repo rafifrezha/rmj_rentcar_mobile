@@ -34,7 +34,7 @@ class _RentalScreenState extends State<RentalScreen> {
         int counter = 0;
         for (int i = amountStr.length - 1; i >= 0; i--) {
           if (counter > 0 && counter % 3 == 0) {
-            result = '.' + result;
+            result = '.$result';
           }
           result = amountStr[i] + result;
           counter++;

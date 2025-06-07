@@ -9,6 +9,7 @@ import 'screens/user/history_screen.dart';
 import 'screens/user/profile_screen.dart';
 import 'screens/user/time_converter_screen.dart';
 import 'screens/user/feedback_screen.dart';
+import 'screens/user/location_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -109,6 +110,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const ProfileScreen(),
         '/time-converter': (context) => const TimeConverterScreen(),
         '/feedback': (context) => const FeedbackScreen(),
+        '/location': (context) => const LocationScreen(),
       },
     );
   }
